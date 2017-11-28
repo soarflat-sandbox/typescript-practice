@@ -21,7 +21,7 @@ const greeter = new Greeter('world');
 
 このクラスには、`greeting`という名前のプロパティ、コンストラクタ、および`greet`メソッドという3つのメンバがある。
 
-## インターフェイス
+## 継承
 TypeScriptでは、オブジェクト指向の共通のパターンを利用できる。
 
 クラスベースのプログラミングで最も基本的なパターンの1つは、継承を利用して新しいクラスを作成するために既存のクラスを拡張できることである。
@@ -112,10 +112,12 @@ tom.move(34);
 
 `Snake`、`Horse`のどちらのクラスも`move`メソッドを定義しているため`Animal`の`move`メソッドはオーバーライドされる。
 
-## パブリック、プライベート、および保護された修飾子
-TypeScriptでは、各メンバはデフォルトでパブリック（自由にアクセスできる状態）である。
+## アクセス修飾子（public、private、protected）
 
-そのため、以下のそれぞれの記述は同じ動作をする認識で問題ない。
+### public
+TypeScriptでは、各メンバはデフォルトでpublic（自由にアクセスできる状態）である。
+
+そのため、以下のそれぞれの記述はどちらも同じ動作をする。
 
 ```ts
 class Animal {
@@ -124,11 +126,9 @@ class Animal {
   constructor(theName: string) {
     this.name = theName
   }
-
-  move(distanceInMeters: number = 0) {
-    console.log(`${this.name} moved ${distanceInMeters}m.`);
-  }
 }
+
+console.log(new Animal('Cat').name); // => Cat
 ```
 
 ```ts
@@ -138,9 +138,96 @@ class Animal {
   public constructor(theName: string) {
     this.name = theName
   }
+}
 
-  public move(distanceInMeters: number = 0) {
-    console.log(`${this.name} moved ${distanceInMeters}m.`);
+console.log(new Animal('Cat').name); // => Cat
+```
+
+### private
+メンバがprivateの場合、クラスの外部からアクセスできない。
+
+```ts
+class Animal {
+  private name: string;
+
+  constructor(theName: string) {
+    this.name = theName;
   }
 }
+
+// エラーが発生する
+console.log(new Animal('Cat').name);
 ```
+
+### protected
+privateとは異なり、派生クラスのインスタンスからアクセスできる。
+
+```ts
+class Person {
+  protected name: string;
+
+  constructor(name: string) {
+    this.name = name;
+  }
+}
+
+class Employee extends Person {
+  private department: string;
+
+  constructor(name: string, department: string) {
+    super(name);
+    this.department = department;
+  }
+
+  public getElevatorPitch() {
+    return `Hello, my name is ${this.name} and I work in ${this.department}.`;
+  }
+}
+
+let howard = new Employee("Howard", "Sales");
+// 派生クラスのインスタンスなのでnameにアクセスできる
+console.log(howard.getElevatorPitch());
+
+// エラーが発生する
+console.log(howard.name);
+```
+
+`constructor`をprotectedにすることもできる。
+
+```ts
+class Person {
+  protected name: string;
+
+  protected constructor(name: string) {
+    this.name = name;
+  }
+}
+
+class Employee extends Person {
+  private department: string;
+
+  constructor(name: string, department: string) {
+    super(name);
+    this.department = department;
+  }
+
+  public getElevatorPitch() {
+    return `Hello, my name is ${this.name} and I work in ${this.department}.`;
+  }
+}
+
+// Personのインスタンスのため、Personのconstructorを実行できる。
+let howard = new Employee('Howard', 'Sales');
+
+// Personのconstructorはprotectedのためエラーが発生する
+let john = new Person('John');
+```
+
+## 読み取り専用
+
+## アクセサ
+
+## Staticプロパティ
+
+## Abstract Class（抽象クラス）
+
