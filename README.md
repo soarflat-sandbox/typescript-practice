@@ -1,1 +1,3 @@
-# typescript-practice
+# TypeScript学習
+
+- [インターフェイス](interfaces/)
