@@ -160,7 +160,7 @@ console.log(new Animal('Cat').name);
 ```
 
 ### protected
-privateとは異なり、派生クラスのインスタンスからアクセスできる。
+privateとは異なり、派生クラスのメソッドからアクセスできる。
 
 ```ts
 class Person {
@@ -185,7 +185,7 @@ class Employee extends Person {
 }
 
 let howard = new Employee("Howard", "Sales");
-// 派生クラスのインスタンスなのでnameにアクセスできる
+// 派生クラスのメソッドなのでnameにアクセスできる
 console.log(howard.getElevatorPitch());
 
 // エラーが発生する
