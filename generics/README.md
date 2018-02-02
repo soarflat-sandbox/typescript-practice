@@ -57,9 +57,8 @@ identity<number>(2);
 identity<string>('soarflat');
 ```
 
-`identity<T>`の`<T>`に渡した型が`identity`関数内の`T`に定義される。
+`<T>`は仮型引数と言い、ここに`<string>`などの実型引数を渡す。
 
-そのため
+そのため、`identity<T>`の`<T>`に渡した型が`identity`関数内の`T`に定義される。
 
-- `identity<number>(2)`は`T`の型がnumberになり、引数に数値を渡し数値の戻り値を返すことを保証する。
-- `identity<string>('soarflat')`は`T`の型がstringになり、引数に文字列を渡し文字列の戻り値を返すことを保証する。
+このようにジェネリクスを利用すれば、1つの関数、クラスなどで複数の型を利用できる。
