@@ -9,7 +9,6 @@
 ジェネリクスを利用しない例と、利用する例を比較してみて、どんな時にジェネリクスを利用すれば良いのかを見ていく。
 
 ### ジェネリクスを利用しない例
-
 以下はジェネリクスを利用していない`identity`関数。
 
 引数をただ返すだけの関数であり、引数に数値を渡し数値の戻り値を返すことを保証している。
@@ -62,3 +61,31 @@ identity<string>('soarflat');
 そのため、`identity<T>`の`<T>`に渡した型が`identity`関数内の`T`に定義される。
 
 このようにジェネリクスを利用すれば、1つの関数、クラスなどで複数の型を利用できる。
+
+### 型変数の利用
+```ts
+// 数値の配列のみ利用できる
+function identity(arg: number[]): number[] {
+  console.log(arg.length);
+  return arg;
+}
+
+identity([2, 2, 2]);
+
+// 文字列の配列のみ利用できる
+function identity2<T>(arg: string[]): string[] {
+  console.log(arg.length);
+  return arg;
+}
+
+identity2(['2', '2', '2']);
+
+// 数値、文字列のどちらの配列も利用できる
+function identity3<T>(arg: T[]): T[] {
+  console.log(arg.length);
+  return arg;
+}
+
+identity3<number>([2, 2, 2]);
+identity3<string>(['2', '2', '2']);
+```
