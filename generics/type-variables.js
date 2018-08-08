@@ -1,3 +1,4 @@
+"use strict";
 // 数値の配列のみ利用できる
 function identity(arg) {
     console.log(arg.length);
