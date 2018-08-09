@@ -77,7 +77,7 @@ let x: [string, number];
 // OK
 x = ['hello', 10];
 
-// エラーが出力される
+// Errorが出力される
 x = [10, 'hello'];
 ```
 
@@ -92,7 +92,7 @@ x = ['hello', 10];
 console.log(x[0].substr(1));
 
 // x[1]には数値の型を宣言しているため、文字列のsubstr()が実行されることはありえない
-// そのため、エラーが出力される
+// そのため、Errorが出力される
 console.log(x[1].substr(1));
 ```
 
@@ -108,7 +108,7 @@ x[3] = 'world';
 // 文字列なのでOK
 console.log(x[5].toString());
 
-// 文字列でも数値でもないため、エラーが発生する
+// 文字列でも数値でもないため、Errorが発生する
 x[6] = true;
 ```
 
@@ -226,4 +226,70 @@ void と同じく、それだけで特に役に立つというわけではない
 ```ts
 let u: undefined = undefined;
 let n: null = null;
+```
+
+## Never
+
+決して出現（発生）しない値の型を表す。
+
+例えば、常に例外をスローする関数や、決して戻り値を返さない関数の戻り値の型になる。
+
+```ts
+function error(message: string): never {
+  throw new Error(message);
+}
+
+function fail() {
+  return error('Something failed');
+}
+
+function infiniteLoop(): never {
+  while (true) {}
+}
+```
+
+## Object
+
+非プリミティブ型（`number`、`string`、`boolean`、`symbol`、`null`、`undefined`ではない型）を表す型。
+
+```ts
+declare function create(o: object | null): void;
+
+// objectなのでOK
+create({ prop: 0 });
+// nullなのでOK
+create(null);
+
+// 以下はobjectでもnullでもないので全てError
+create(42);
+create('string');
+create(false);
+create(undefined);
+```
+
+## Type assertions
+
+<!-- TOOD: 理解に時間がかかりそうなので、後回し
+時々、あなたは TypeScript よりも価値についてもっと知ることになるでしょう。通常、これは、あるエンティティのタイプが現在のタイプよりも具体的である可能性があることが分かったときに発生します。
+
+型アサーションは、コンパイラに "私を信じて、私がしていることを知っている"と言う方法です。型アサーションは、他の言語の型キャストに似ていますが、特別なチェックやデータの再構築を行いません。実行時の影響はなく、純粋にコンパイラによって使用されます。 TypeScript は、プログラマが必要とする特別なチェックを実行したことを前提としています。
+
+型アサーションには 2 つの形式があります。 1 つは「角かっこ」の構文です：
+
+型アサーションを利用すると、基底クラスの型を適切な派生クラスの型へ変換することができます。 次に示すのは型アサーションの書式です。
+https://docs.solab.jp/typescript/class/assertion/
+
+型アサーションは値の持つ型情報を実行時の値とは別に上書きします。
+実際の値の型とアサーションの型が確実に一致するとき以外は使用すべきでありません。
+https://qiita.com/gutchom/items/bb740deb3100684b82a6
+
+type assertions (型アサーション) は他のプログラミング言語でいう「キャスト」のこと
+type assertions の構文は 2 種類ある
+http://www.geocities.jp/m_hiroi/light/tsabc02.html
+
+いわゆるキャストです。互換性のある型であれば、自由に型付けを変えることができます。型アサーションはむやみやたらに使わず、最小限の利用に抑えるようにしましょう。
+https://www.buildinsider.net/language/quicktypescript/01#type-assertion
+-->
+
+```ts
 ```
