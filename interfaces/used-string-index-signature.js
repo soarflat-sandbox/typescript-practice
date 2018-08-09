@@ -9,6 +9,6 @@ function createSquare(config) {
     }
     return newSquare;
 }
-// `interface SquareConfig`で宣言した`width?`は任意のプロパティのため
-// width を渡さなくてもエラーは発生しない
-var mySqure = createSquare({ color: 'black' });
+// `interface SquareConfig`で`[propName: string]: any;`を宣言しているため
+// `color`、`width`以外のプロパティを指定してもエラーは発生しない
+var mySquare = createSquare({ colour: 'red', ddd: 'red', width: 100 });

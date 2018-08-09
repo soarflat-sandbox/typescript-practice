@@ -1,4 +1,3 @@
-// `color?`、`width?`と指定しているため、どちらも任意のプロパティ
 interface SquareConfig {
   color?: string;
   width?: number;
@@ -18,6 +17,7 @@ function createSquare(config: SquareConfig): { color: string; area: number } {
   return newSquare;
 }
 
-// `interface SquareConfig`で宣言した`width?`は任意のプロパティのため
-// width を渡さなくてもエラーは発生しない
-const mySqure = createSquare({ color: 'black' });
+// 別の変数にオブジェクトを参照し、それを`createSquare()`に渡せば
+// 過剰プロパティのチェックは回避されるため、エラーは発生しない
+const squareOptions = { colour: 'red', width: 100 };
+const mySquare = createSquare(squareOptions);
