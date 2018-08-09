@@ -12,25 +12,29 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var Person = /** @class */ (function () {
-    function Person(name) {
-        this.name = name;
-    }
-    return Person;
-}());
-var Employee = /** @class */ (function (_super) {
-    __extends(Employee, _super);
-    function Employee(name, department) {
-        var _this = _super.call(this, name) || this;
-        _this.department = department;
-        return _this;
-    }
-    Employee.prototype.getElevatorPitch = function () {
-        return "Hello, my name is " + this.name + " and I work in " + this.department + ".";
-    };
-    return Employee;
-}(Person));
-// Personのインスタンスのため、Personのconstructorを実行できる。
-var howard = new Employee("Howard", "Sales");
-// Personのconstructorはprotectedのためエラーが発生する
-var john = new Person('John');
+var ProtectedToConstructor;
+(function (ProtectedToConstructor) {
+    var Person = /** @class */ (function () {
+        function Person(name) {
+            this.name = name;
+        }
+        return Person;
+    }());
+    var Employee = /** @class */ (function (_super) {
+        __extends(Employee, _super);
+        function Employee(name, department) {
+            var _this = _super.call(this, name) || this;
+            _this.department = department;
+            return _this;
+        }
+        Employee.prototype.getElevatorPitch = function () {
+            return "Hello, my name is " + this.name + " and I work in " + this.department + ".";
+        };
+        return Employee;
+    }(Person));
+    // Employee は Person のインスタンスのため
+    // スーパークラスである Person の constructor を実行できる
+    var howard = new Employee('Howard', 'Sales');
+    // Person の constructor は protected のため Error
+    // let john = new Person('John');
+})(ProtectedToConstructor || (ProtectedToConstructor = {}));

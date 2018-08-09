@@ -12,26 +12,29 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var Person = /** @class */ (function () {
-    function Person(name) {
-        this.name = name;
-    }
-    return Person;
-}());
-var Employee = /** @class */ (function (_super) {
-    __extends(Employee, _super);
-    function Employee(name, department) {
-        var _this = _super.call(this, name) || this;
-        _this.department = _this.department;
-        return _this;
-    }
-    Employee.prototype.getElevatorPitch = function () {
-        return "Hello, my name is " + this.name + " and I work in " + this.department + ".";
-    };
-    return Employee;
-}(Person));
-var howard = new Employee("Howard", "Sales");
-// 派生クラスのメソッドなのでnameにアクセスできる
-console.log(howard.getElevatorPitch());
-// エラーが発生する
-console.log(howard.name);
+var Protected;
+(function (Protected) {
+    var Person = /** @class */ (function () {
+        function Person(name) {
+            this.name = name;
+        }
+        return Person;
+    }());
+    var Employee = /** @class */ (function (_super) {
+        __extends(Employee, _super);
+        function Employee(name, department) {
+            var _this = _super.call(this, name) || this;
+            _this.department = department;
+            return _this;
+        }
+        Employee.prototype.getElevatorPitch = function () {
+            return "Hello, my name is " + this.name + " and I work in " + this.department + ".";
+        };
+        return Employee;
+    }(Person));
+    var howard = new Employee('Howard', 'Sales');
+    // 派生クラスのメソッドなのでnameにアクセスできる
+    console.log(howard.getElevatorPitch());
+    // エラーが発生する
+    // console.log(howard.name);
+})(Protected || (Protected = {}));
