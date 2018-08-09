@@ -313,4 +313,79 @@ if (employee.fullName) {
 
 ## Static プロパティ
 
+インスタンスではなく、クラスそのものに属しているメンバを宣言できる。
+
+```ts
+class Grid {
+  static origin = { x: 0, y: 0 };
+
+  constructor(public scale: number) {}
+
+  calculateDistanceFromOrigin(point: { x: number; y: number }) {
+    // static　プロパティにアクセスするために以下のようにクラス名とプロパティを指定する
+    let xDist = point.x - Grid.origin.x;
+    let yDist = point.y - Grid.origin.y;
+    return Math.sqrt(xDist * xDist + yDist * yDist) / this.scale;
+  }
+}
+let grid1 = new Grid(1.0);
+let grid2 = new Grid(5.0);
+
+console.log(grid1.calculateDistanceFromOrigin({ x: 10, y: 10 }));
+console.log(grid2.calculateDistanceFromOrigin({ x: 10, y: 10 }));
+```
+
 ## Abstract Class（抽象クラス）
+
+継承されることを前提としたスーパークラス。そのため、抽象クラスは直接インスタンス化できない。
+
+抽象クラスのコンストラクタ内に抽象メソッドも定義できる。
+
+```ts
+abstract class Department {
+  constructor(public name: string) {}
+
+  printName(): void {
+    console.log(`Department name: ${this.name}`);
+  }
+
+  // 抽象メソッド
+  abstract printMeeting(): void;
+}
+
+class AccountingDepartment extends Department {
+  constructor() {
+    // 継承したクラスのコンストラクタ内で`super()`を必ず呼ばなけれいけない
+    super('Accounting and Auditing');
+  }
+
+  printMeeting(): void {
+    console.log('The Accounting Department meets each Monday at 10am.');
+  }
+
+  generateReports(): void {
+    console.log('Generating accounting reports...');
+  }
+}
+
+// 抽象型への参照を生成
+let department: Department;
+
+// 抽象クラスは直接インスタンス化できないためError
+// department = new Department();
+
+// 非抽象のサブクラスを生成する
+department = new AccountingDepartment();
+
+department.printName();
+department.printMeeting();
+
+// 抽象クラスで定義されていないためError
+// department.generateReports();
+```
+
+## 高度なテクニック
+
+### コンストラクタ関数
+
+### インターフェースとしてクラスを使用
