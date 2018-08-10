@@ -20,6 +20,8 @@ namespace Validation {
 }
 
 const strings = ['Hello', '98052', '101'];
+// インデックスのデータ型を文字列型（`[s: string]`）にして
+// プロパティのデータ型をインターフェイス（`StringValidator`）にする
 let validators: { [s: string]: Validation.StringValidator } = {};
 validators['ZIP code'] = new Validation.ZipCodeValidator();
 validators['Letters only'] = new Validation.LettersOnlyValidator();

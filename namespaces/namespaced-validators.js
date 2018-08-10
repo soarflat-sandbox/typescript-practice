@@ -22,6 +22,8 @@ var Validation;
     Validation.ZipCodeValidator = ZipCodeValidator;
 })(Validation || (Validation = {}));
 var strings = ['Hello', '98052', '101'];
+// インデックスのデータ型を文字列型（`[s: string]`）にして
+// プロパティのデータ型をインターフェイス（`StringValidator`）にする
 var validators = {};
 validators['ZIP code'] = new Validation.ZipCodeValidator();
 validators['Letters only'] = new Validation.LettersOnlyValidator();
