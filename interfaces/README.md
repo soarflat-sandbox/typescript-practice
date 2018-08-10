@@ -297,7 +297,7 @@ const mySquare = createSquare(squareOptions);
 
 ```ts
 // 引数`source`が文字列型、引数`subString`が文字列型
-// 戻り値が真偽値方のFunction 型のインターフェイスを宣言する
+// 戻り値が真偽値である Function 型のインターフェイスを宣言する
 interface SearchFunc {
   (source: string, subString: string): boolean;
 }
@@ -318,3 +318,59 @@ mySearch = function(src, sub) {
 ## インデックス可能な型
 
 <!-- TODO: すぐに理解できなさそうなので後回し -->
+
+## Class 型
+
+```ts
+namespace ClassTypes {
+  interface ClockInterface {
+    currentTime: Date;
+    setTime(d: Date);
+  }
+
+  class Clock implements ClockInterface {
+    currentTime: Date;
+    setTime(d: Date) {
+      this.currentTime = d;
+    }
+    constructor(h: number, m: number) {}
+  }
+}
+```
+
+### Difference between the static and instance sides of classes
+
+```ts
+interface ClockConstructor {
+  new (hour: number, minute: number): ClockInterface;
+}
+
+interface ClockInterface {
+  tick();
+}
+
+function createClock(
+  ctor: ClockConstructor,
+  hour: number,
+  minute: number
+): ClockInterface {
+  return new ctor(hour, minute);
+}
+
+class DigitalClock implements ClockInterface {
+  constructor(h: number, m: number) {}
+  tick() {
+    console.log('beep beep');
+  }
+}
+
+class AnalogClock implements ClockInterface {
+  constructor(h: number, m: number) {}
+  tick() {
+    console.log('tick tck');
+  }
+}
+
+let digital = createClock(DigitalClock, 12, 17);
+let analog = createClock(AnalogClock, 7, 32);
+```

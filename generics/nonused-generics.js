@@ -1,4 +1,3 @@
-"use strict";
 var NonusedGenerics;
 (function (NonusedGenerics) {
     function identity(arg) {

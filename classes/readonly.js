@@ -1,4 +1,3 @@
-"use strict";
 var ReadOnly;
 (function (ReadOnly) {
     var Octopus = /** @class */ (function () {

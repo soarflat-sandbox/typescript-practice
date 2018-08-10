@@ -1,4 +1,3 @@
-"use strict";
 var TypeVariables;
 (function (TypeVariables) {
     // 数値の配列のみ利用できる

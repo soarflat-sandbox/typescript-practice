@@ -1,4 +1,3 @@
-"use strict";
 var GetterSetter;
 (function (GetterSetter) {
     var Employee = /** @class */ (function () {

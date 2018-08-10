@@ -1,4 +1,3 @@
-"use strict";
 function printLabel(labelledObj) {
     console.log(labelledObj.label);
 }

@@ -1,4 +1,3 @@
-"use strict";
 var Public;
 (function (Public) {
     var Animal = /** @class */ (function () {

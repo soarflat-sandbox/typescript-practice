@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "target": "ES5",
-    "module": "commonjs",
-    "strict": true
+    "module": "commonjs"
+    // "strict": true
   },
   "exclude": ["node_modules"]
 }

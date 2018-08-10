@@ -1,4 +1,3 @@
-"use strict";
 var StaticProperty;
 (function (StaticProperty) {
     var Grid = /** @class */ (function () {

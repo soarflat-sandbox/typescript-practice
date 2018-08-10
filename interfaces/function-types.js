@@ -1,4 +1,3 @@
-"use strict";
 var mySearch;
 // SearchFuncの型チェックが行われる
 mySearch = function (src, sub) {
