@@ -12,9 +12,12 @@
 
 ### ジェネリクスを利用しない例
 
-以下はジェネリクスを利用していない`identity`関数。
+以下はジェネリクスを利用していない`identity()`と`identity2()`関数。
 
-引数をただ返すだけの関数であり、引数に数値を渡し数値の戻り値を返すことを保証している。
+引数を返すだけの関数であり、それぞれの関数は以下を保証する。
+
+- `identity()`: 引数に数値を渡し数値の戻り値を返すことを保証する
+- `identity2()`: 引数に文字列を渡し文字列の戻り値を返すことを保証する
 
 [nonused-generics.ts](./nonused-generics.ts)
 
@@ -23,28 +26,26 @@ function identity(arg: number): number {
   return arg;
 }
 
+// OK
 identity(2);
 
 // 文字列を渡しているのでError
 // identity('soarflat');
-```
 
-以下は引数に文字列を渡し文字列の戻り値を返すことを保証する`identity2`関数。`identity`関数とは型の指定が違うだけで機能は同じ。
-
-[nonused-generics.ts](./nonused-generics.ts)
-
-```ts
 function identity2(arg: string): string {
   return arg;
 }
 
+// OK
 identity2('soarflat');
 
 // 数値を渡しているのでError
 // identity2(2);
 ```
 
-ジェネリクスを利用しない場合、機能は同じだが型の指定が違う関数をチェックしたい型の数だけ作成しなければならず、非常に大変である。
+`identity()`と`identity2`関数は型の宣言が違うだけで機能は同じである。
+
+ジェネリクスを利用しない場合、機能は同じだが型の宣言が違う関数を、チェックしたい型の数だけ作成しなければならず、非常に大変である。
 
 こんな時にジェネリクスを利用する。
 
@@ -72,43 +73,33 @@ identity<string>('soarflat');
 
 このようにジェネリクスを利用すれば、1 つの関数、クラスなどで複数の型を利用できる。
 
-### 型変数の利用
+## ジェネリクスの型変数の利用
 
-上記の`identity`のような関数の場合、仮型引数`<T>`は any 型のように扱われる。
+上記の`identity`のような関数の場合、仮型引数`T`は any 型のように扱われる。
 
 そのため、以下の関数はエラーが発生する。
 
 ```ts
 function loggingIdentity<T>(arg: T): T {
-  // `T`は any 型のように扱われるため、 array 型を前提とした記述をするとエラーが発生する
+  // `T`は any 型のように扱われるため、array 型を前提とした記述をするとエラーが発生する
   console.log(arg.length);
   return arg;
 }
 ```
+
+以下のように`T`を直接扱うのではなく、`T`の array 型を宣言すればエラーは解消される。
 
 ```ts
-// 数値の配列のみ利用できる
-function identity(arg: number[]): number[] {
+function identity<T>(arg: T[]): T[] {
   console.log(arg.length);
   return arg;
 }
-
-identity([2, 2, 2]);
-
-// 文字列の配列のみ利用できる
-function identity2<T>(arg: string[]): string[] {
-  console.log(arg.length);
-  return arg;
-}
-
-identity2(['2', '2', '2']);
 
 // 数値、文字列のどちらの配列も利用できる
-function identity3<T>(arg: T[]): T[] {
-  console.log(arg.length);
-  return arg;
-}
-
-identity3<number>([2, 2, 2]);
-identity3<string>(['2', '2', '2']);
+identity<number>([2, 2, 2]);
+identity<string>(['2', '2', '2']);
 ```
+
+## ジェネリクスの型
+
+## ジェネリクスのクラス
