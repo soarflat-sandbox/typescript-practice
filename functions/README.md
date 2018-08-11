@@ -1,40 +1,58 @@
 # Functions
 
-名前付き関数と無名関数で、宣言の記述が少しだけ異なる。
+TypeScript では
 
-以下は、第 1 引数が number 型、第 2 引数が number 型、返り値が number 型の関数の型。
+- 関数に対して型を宣言する
+- 関数の型を宣言する
+
+ができる。
+
+## 関数に対して型を宣言する
+
+名前付き関数と無名関数のどちらに対しても型を宣言できるが、宣言の記述が少しだけ異なる。
+
+以下は関数に対して、第 1 引数が`number`型、第 2 引数が`number`型、返り値が`string`型を宣言したもの。
 
 [function-type.ts](./function-type.ts)
 
 ```ts
 // 名前付き関数
-function add(x: number, y: number): number {
-  return x + y;
+function add(x: number, y: number): string {
+  return String(x + y);
 }
+add(1, 2); // OK
+add('1', '2'); // 数値以外は渡せないので Error
 
 // 無名関数
-const add2 = function(x: number, y: number): number {
-  return x + y;
+const add2 = function(x: number, y: number): string {
+  return String(x + y);
 };
+add2(1, 2); // OK
+add2('1', '2'); // 数値以外は渡せないので Error
 ```
 
-以下は完全な関数の型（↑ の型との違いが良くわかっていない）。
+## 関数の型を宣言する
+
+以下は変数`add`に対して、第 1 引数が`number`型、第 2 引数が`number`型、返り値が`string`型の関数の型を宣言し、無名関数を代入したもの。
 
 [full-type-function.ts](./full-type-function.ts)
 
 ```ts
-// 完全な関数の型
-const add: (baseValue: number, increment: number) => number = function(
+const add: (x: number, y: number) => string = function(x, y) {
+  return String(x + y);
+};
+add(1, 2); // OK
+add('1', '2'); // 数値以外は渡せないので Error
+
+// ↑は型推論が有効になっているため、以下の記述と同じ（無名関数の型が暗黙的に宣言されている）
+const add2: (x: number, y: number) => string = function(
   x: number,
   y: number
-): number {
-  return x + y;
+): string {
+  return String(x + y);
 };
-
-// ↑のaddは以下のように記述することもできる
-const add2: (baseValue: number, increment: number) => number = function(x, y) {
-  return x + y;
-};
+add2(1, 2); // OK
+add2('1', '2'); // 数値以外は渡せないので Error
 ```
 
 ## 任意引数

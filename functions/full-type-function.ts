@@ -1,17 +1,17 @@
 namespace FullTypeFunction {
-  // 完全な関数の型
-  const add: (baseValue: number, increment: number) => number = function(
+  const add: (x: number, y: number) => string = function(x, y) {
+    return String(x + y);
+  };
+  add(1, 2); // OK
+  add('1', '2'); // 数値以外は渡せないので Error
+
+  // ↑は型推論が有効になっているため、以下の記述と同じ（無名関数の型が暗黙的に宣言されている）
+  const add2: (x: number, y: number) => string = function(
     x: number,
     y: number
-  ): number {
-    return x + y;
+  ): string {
+    return String(x + y);
   };
-
-  // ↑のaddは以下のように記述することもできる
-  const add2: (baseValue: number, increment: number) => number = function(
-    x,
-    y
-  ) {
-    return x + y;
-  };
+  add2(1, 2); // OK
+  add2('1', '2'); // 数値以外は渡せないので Error
 }
