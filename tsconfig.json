@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
-    "target": "ES5",
-    "module": "commonjs"
-    // "strict": true
+    "target": "es5",
+    "module": "es2015"
+    // "strict": true,
+    "experimentalDecorators": true
   },
   "exclude": ["node_modules"]
 }
