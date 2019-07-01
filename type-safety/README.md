@@ -645,3 +645,85 @@ function judgeUserType(user: UserA | UserB | UserC) {
   }
 }
 ```
+
+### ユーザー定義 type guards
+
+`is`を利用すれば、型推論を補助できる。
+
+```ts
+type User = { gender: string; [k: string]: any };
+type UserA = User & { name: string };
+type UserB = User & { age: number };
+
+function isUserA(user: UserA | UserB): user is UserA {
+  return user.name !== undefined;
+}
+
+function isUserB(user: UserA | UserB): user is UserB {
+  return user.name !== undefined;
+}
+
+function getUserType(user: any) {
+  // const u0: any
+  const u0 = user;
+  // isUserA の戻り値の型アノテーションは`user is UserA`のため
+  // この条件を通過したブロックでは`user`が UserA 型という推論が適用される
+  if (isUserA(user)) {
+    // const u1: UserA
+    const u1 = user;
+    return 'A';
+  }
+  // isUserB の戻り値の型アノテーションは`user is UserB`のため
+  // この条件を通過したブロックでは`user`が UserB 型という推論が適用される
+  if (isUserB(user)) {
+    // const u2: UserB
+    const u2 = user;
+    return 'B';
+  }
+  return 'undefined';
+}
+// const x: 'A' | 'B' | 'unknown'
+const x = getUserType({ name: 'Taro' });
+```
+
+### Array.filter で型を絞り込む
+
+Array.filterでは、通常、型を絞り込むことができない。
+
+たとえば、以下の場合、処理結果の型は必ず UserB[]になるが、推論結果は絞り込みが適用されない。
+
+```ts
+type User = { name: string };
+type UserA = User & { gender: 'male' | 'female' | 'other' };
+type UserB = User & { graduate: string };
+
+const users: (UserA | UserB)[] = [
+  { name: 'Taro', gender: 'male' },
+  { name: 'Hanako', graduate: 'Tokyo' }
+];
+// const filteredUsers: (UserA | UserB)[]
+const filteredUsers = users.filter(user => 'graduate' in user);
+```
+
+以下のようにユーザー定義ガード節が付与された関数を併用することで解決できる。
+
+```ts
+type User = { name: string };
+type UserA = User & { gender: 'male' | 'female' | 'other' };
+type UserB = User & { graduate: string };
+
+const users: (UserA | UserB)[] = [
+  { name: 'Taro', gender: 'male' },
+  { name: 'Hanako', graduate: 'Tokyo' }
+];
+function filterUser(user: UserA | UserB): user is UserB {
+  return 'graduate' in user;
+}
+// const filteredUsers: UserB[]
+const filteredUsers = users.filter(filterUser);
+
+// ↑は以下のように書ける
+// const filteredUsers = users.filter(
+//   (user: UserA | UserB): user is UserB => 'graduate' in user
+// );
+```
